@@ -3,10 +3,10 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "less-js"
-  s.version     = '0.1.0'
+  s.version     = '0.1.1'
 
-  s.authors     = ["Adnan Ali"]
-  s.email       = ["adnan.ali@gmail.com"]
+  s.authors     = ["Joshua Peek", "Adnan Ali"]
+  s.email       = ["josh@joshpeek.com", "adnan.ali@gmail.com"]
   s.homepage    = "https://github.com/thisduck/ruby-less-js"
 	s.summary     = "Ruby Less.js Compiler"
 	s.description = <<-EOS
