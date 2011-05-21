@@ -2,8 +2,7 @@ require 'execjs'
 require 'less_js/source'
 
 module LessJs
-  EngineError      = ExecJS::RuntimeError
-  CompilationError = ExecJS::ProgramError
+  class ParseError < StandardError; end
 
   module Source
     def self.path
@@ -11,7 +10,7 @@ module LessJs
     end
 
     def self.path=(path)
-      @contents = @version = @bare_option = @context = nil
+      @contents = @version = @context = nil
       @path = path
     end
 
@@ -20,46 +19,39 @@ module LessJs
     end
 
     def self.version
-      @version ||= contents[/Less.js Compiler v([\d.]+)/, 1]
+      @version ||= contents[/LESS - Leaner CSS v([\d.]+)/, 1]
     end
 
     def self.context
-      @context ||= ExecJS.compile(contents)
+      @context ||= ExecJS.compile <<-EOS
+        #{contents}
+
+        function compile(data) {
+          var result;
+          new less.Parser().parse(data, function(error, tree) {
+            result = [error, tree.toCSS()];
+          });
+          return result;
+        }
+      EOS
     end
   end
 
   class << self
-    def engine
-    end
-
-    def engine=(engine)
-    end
-
     def version
       Source.version
     end
 
-		def callback(error, tree)
-			puts tree.inspect
-		end
-
     # Compile a script (String or IO) to CSS.
     def compile(script, options = {})
       script = script.read if script.respond_to?(:read)
+      error, data = Source.context.call('compile', script)
 
-			code = <<-EOS
-(function(input) {
-	var resp = "error";
-	new(less.Parser)().parse(input, function(error, tree) {
-		resp = [error, tree.toCSS()]
-	});
-	return resp;
-})
-			EOS
-
-			(error, response) = Source.context.call(code, script)
-			raise CompilationError, error if error
-			response
+      if error
+        raise ParseError, error['message']
+      else
+        data
+      end
     end
   end
 end
