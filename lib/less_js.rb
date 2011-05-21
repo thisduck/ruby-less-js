@@ -29,12 +29,6 @@ module LessJs
   end
 
   class << self
-    def engine
-    end
-
-    def engine=(engine)
-    end
-
     def version
       Source.version
     end
