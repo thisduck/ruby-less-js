@@ -20,7 +20,7 @@ module LessJs
     end
 
     def self.version
-      @version ||= contents[/Less.js Compiler v([\d.]+)/, 1]
+      @version ||= contents[/LESS - Leaner CSS v([\d.]+)/, 1]
     end
 
     def self.context
