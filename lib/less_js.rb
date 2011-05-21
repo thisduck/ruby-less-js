@@ -33,10 +33,6 @@ module LessJs
       Source.version
     end
 
-    def callback(error, tree)
-      puts tree.inspect
-    end
-
     # Compile a script (String or IO) to CSS.
     def compile(script, options = {})
       script = script.read if script.respond_to?(:read)
