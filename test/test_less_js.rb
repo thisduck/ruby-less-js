@@ -15,7 +15,7 @@ class TestLessJs < Test::Unit::TestCase
   end
 
   def test_compilation_error
-    assert_raise LessJs::CompilationError do
+    assert_raise LessJs::ParseError do
       LessJs.compile("&&&&.a")
     end
   end
