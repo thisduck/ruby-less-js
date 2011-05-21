@@ -39,27 +39,27 @@ module LessJs
       Source.version
     end
 
-		def callback(error, tree)
-			puts tree.inspect
-		end
+    def callback(error, tree)
+      puts tree.inspect
+    end
 
     # Compile a script (String or IO) to CSS.
     def compile(script, options = {})
       script = script.read if script.respond_to?(:read)
 
-			code = <<-EOS
-(function(input) {
-	var resp = "error";
-	new(less.Parser)().parse(input, function(error, tree) {
-		resp = [error, tree.toCSS()]
-	});
-	return resp;
-})
-			EOS
+      code = <<-EOS
+       (function(input) {
+         var resp = "error";
+         new(less.Parser)().parse(input, function(error, tree) {
+           resp = [error, tree.toCSS()]
+         });
+        return resp;
+      })
+      EOS
 
-			(error, response) = Source.context.call(code, script)
-			raise CompilationError, error if error
-			response
+      (error, response) = Source.context.call(code, script)
+      raise CompilationError, error if error
+      response
     end
   end
 end
