@@ -22,7 +22,7 @@ official Less.js release.) This way you can build against
 different versions of Less.js by requiring the correct version of
 the `less-js-source` gem.
 
-*Note: verion 1.1.1 is tagged as 1.1.1.1 on the `less-js-source` gem.*
+*Note: version 1.1.1 of Less.js is tagged as 1.1.1.1 on the `less-js-source` gem.*
 
 ### ExecJS
 
