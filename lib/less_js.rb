@@ -11,7 +11,7 @@ module LessJs
     end
 
     def self.path=(path)
-      @contents = @version = @bare_option = @context = nil
+      @contents = @version = @context = nil
       @path = path
     end
 
